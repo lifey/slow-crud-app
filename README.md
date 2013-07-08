@@ -58,7 +58,29 @@ Also, you'll want to bring up the 3rd party service
 ```
 cd auth-service
 mvn jetty:run
+
+Running Performance Tests
+=========================
+
+If you want to run the performance testing suite then you need the harness to point to the server running
+both of these.  So you might want to do something like this:
+
 ```
+cd had-one-dismisaal
+mvn jetty:run
+```
+
+```
+cd auth-service
+export MAVEN_OPTS="-Dcom.sun.management.jmxremote.port=1100 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"```
+mvn -Djetty.port=9000 jetty:run
+```
+```
+cd sca-test-harness
+mvn -Djclarity.hod.host=localhost -DJMX_AUTH_SERVER_HOST=localhost -DJMX_AUTH_SERVER_PORT=1100 -DmainClass=com.jclarity.had_one_dismissal.Main -Darguments="-f src/main/resources/exercises.csv" exec:java
+```
+
+The exercises are customisable via a csv file.  See `src/main/resources/` for details.
 
 Configuring slow-crud-app
 =========================
