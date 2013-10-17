@@ -20,4 +20,8 @@ public interface PerformanceProblemsMXBean {
 
     public void setRootLoggingLevel(String level);
 
+    public boolean isSavingLoadedData();
+
+	public void setSavingLoadedData(boolean savingLoadedData);
+
 }

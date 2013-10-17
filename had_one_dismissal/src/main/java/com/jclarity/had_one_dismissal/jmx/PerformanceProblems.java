@@ -17,12 +17,15 @@ public class PerformanceProblems extends JMXComponent implements PerformanceProb
 
     private boolean deadlockEnabled;
     private boolean savingDBQueries;
+    private boolean savingLoadedData;
     private Database database;
 
     public PerformanceProblems() throws Exception {
         register(ADDRESS);
+        setSavingLoadedData(true);
         deadlockEnabled = true;
         savingDBQueries = true;
+        savingLoadedData = true;
         database = Database.IN_MEMORY;
     }
 
@@ -66,6 +69,16 @@ public class PerformanceProblems extends JMXComponent implements PerformanceProb
     public void setRootLoggingLevel(String levelName) {
         Level level = Level.toLevel(levelName);
         LogManager.getRootLogger().setLevel(level);
+    }
+
+    @Override
+	public boolean isSavingLoadedData() {
+	    return savingLoadedData;
+    }
+
+    @Override
+	public void setSavingLoadedData(boolean savingLoadedData) {
+	    this.savingLoadedData = savingLoadedData;
     }
 
 }

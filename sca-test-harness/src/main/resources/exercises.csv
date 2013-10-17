@@ -4,3 +4,4 @@ com.jclarity.had_one_dismissal.exercises.CpuLoadExercise,60000,8
 com.jclarity.had_one_dismissal.exercises.LoggingLoadExercise,60000,8
 com.jclarity.had_one_dismissal.exercises.InterprocessContextSwitchingExercise,60000,100,100
 com.jclarity.had_one_dismissal.exercises.SingleThreadedExercise,60000,200
+com.jclarity.had_one_dismissal.exercises.SearchDiskReadExercise,60000,50

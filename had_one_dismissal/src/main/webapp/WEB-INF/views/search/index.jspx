@@ -5,7 +5,7 @@
   <spring:message code="label_search_index" htmlEscape="false" var="title"/>
   <spring:message code="application_name" htmlEscape="false" var="app_name"/>
     <h3>Search for Jobs</h3>
-    
+
     <form action="" method="post">
         <table>
             <tr>
@@ -31,5 +31,7 @@
             </tr>
         </table>
         <p>* keywords is a comma separated list of terms to search for.</p>
+        
+        <p>${advert}</p>
     </form>
 </div>

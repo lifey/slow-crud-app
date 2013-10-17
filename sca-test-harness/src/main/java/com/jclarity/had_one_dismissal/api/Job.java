@@ -1,10 +1,11 @@
 package com.jclarity.had_one_dismissal.api;
 
 import com.jclarity.had_one_dismissal.Exercise;
+import com.jclarity.had_one_dismissal.record.Stopwatch;
 
 public abstract class Job implements Runnable {
 
-    protected HadOneDismissalApi hadOneDismissal = new HadOneDismissalApi();
+    protected HadOneDismissal hadOneDismissal = new HadOneDismissal();
 
     protected final Exercise exercise;
 
@@ -14,11 +15,15 @@ public abstract class Job implements Runnable {
 
     @Override
     public void run() {
+    	Stopwatch stopwatch = exercise.getRecorder().newWatch();
         while(exercise.isRunning()) {
+        	stopwatch.start();
             try {
                 runJob();
             } catch (Exception e) {
-                // Deliberatly ignored
+                // Deliberately ignored
+            } finally {
+            	stopwatch.stop();
             }
         }
     }
