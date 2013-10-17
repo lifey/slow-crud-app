@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,27 +18,29 @@ import com.jclarity.had_one_dismissal.jmx.PerformanceProblems;
 
 @Component
 public class PermanentAdverts {
-	
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PermanentAdverts.class);
-	
+
 	@Autowired private PerformanceProblems problems;
-	
+
 	private final Random random;
-	
+
 	private List<String> adverts;
 
 	public PermanentAdverts() {
 	    random = new Random();
 	    adverts = Lists.newArrayList();
     }
-	
+
 	private void loadAdverts() {
 		if (haveLoadedAdverts() && cacheEnabled())
 			return;
 
 		try {
-	        File file = new File(PermanentAdverts.class.getResource("adverts.csv").toURI());
-	        adverts = Files.readLines(file, Charset.defaultCharset());
+	        File ads = getFile("adverts.csv");
+	        File buffer = getFile("buffer.csv");
+	        Files.copy(ads, buffer);
+	        adverts = Files.readLines(buffer, Charset.defaultCharset());
         } catch (URISyntaxException e) {
         	LOGGER.error(e.getMessage(), e);
         } catch (IOException e) {
@@ -47,8 +48,12 @@ public class PermanentAdverts {
         }
 	}
 
+	private File getFile(String name) throws URISyntaxException {
+	    return new File(PermanentAdverts.class.getResource(name).toURI());
+    }
+
 	private boolean cacheEnabled() {
-	    return !problems.isSavingLoadedData();
+	    return problems.isSavingLoadedData();
     }
 
 	private boolean haveLoadedAdverts() {
@@ -60,5 +65,5 @@ public class PermanentAdverts {
 		int index = random.nextInt(adverts.size());
 		return adverts.get(index);
 	}
-	
+
 }

@@ -8,18 +8,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jclarity.had_one_dismissal.domain.JobListing;
+import com.jclarity.had_one_dismissal.domain.PermanentAdverts;
 
 @RequestMapping("/search/**")
 @Controller
 public class Search {
 
     private static final int NO_KNOWN_SALARY = -1;
+    
+    @Autowired private PermanentAdverts adverts;
 
     @RequestMapping(method = RequestMethod.POST)
     public String post(HttpServletRequest request, Model uiModel) {
@@ -31,6 +35,7 @@ public class Search {
         List<JobListing> listings = queryListings(salaryRange, keywords, location, jobTitle);
         uiModel.addAttribute("resultCount", listings.size());
         uiModel.addAttribute("results", listings);
+        uiModel.addAttribute("advert", adverts.getAdvert());
 
         return "search/results";
     }
@@ -104,7 +109,9 @@ public class Search {
     }
 
     @RequestMapping
-    public String index() {
+    public String index(Model uiModel) {
+    	uiModel.addAttribute("advert", adverts.getAdvert());
+
         return "search/index";
     }
 

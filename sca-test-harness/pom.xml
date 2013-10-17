@@ -19,6 +19,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <toolsjar>${java.home}/../lib/tools.jar</toolsjar>
+        <gs.collections.version>4.1.0</gs.collections.version>
     </properties>
 
     <build>
@@ -82,5 +83,15 @@
             <artifactId>guava</artifactId>
             <version>12.0.1</version>
         </dependency>
+        <dependency>
+		    <groupId>com.goldmansachs</groupId>
+		    <artifactId>gs-collections</artifactId>
+		    <version>${gs.collections.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.goldmansachs</groupId>
+		    <artifactId>gs-collections-api</artifactId>
+		    <version>${gs.collections.version}</version>
+		</dependency>
     </dependencies>
 </project>

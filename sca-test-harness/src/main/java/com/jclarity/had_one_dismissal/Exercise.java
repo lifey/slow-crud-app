@@ -1,6 +1,7 @@
 package com.jclarity.had_one_dismissal;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -11,6 +12,8 @@ import com.jclarity.crud_common.api.AuthServicePerformanceVariablesMXBean;
 import com.jclarity.crud_common.api.PerformanceProblemsMXBean;
 import com.jclarity.had_one_dismissal.jmx.AuthServiceJMXConnection;
 import com.jclarity.had_one_dismissal.jmx.PerformanceProblemsJMXConnection;
+import com.jclarity.had_one_dismissal.record.Recorder;
+import com.jclarity.had_one_dismissal.record.TimingStatistics;
 
 public abstract class Exercise {
 
@@ -23,7 +26,8 @@ public abstract class Exercise {
 
     private final PerformanceProblemsJMXConnection appJmxConnection;
     private final AuthServiceJMXConnection authJmxConnection;
-
+    
+    private Recorder recorder;
 
     protected volatile boolean isRunning = true;
 
@@ -45,7 +49,7 @@ public abstract class Exercise {
 
         if (arguments.length == 0)
             return type.newInstance();
-
+        
         return (Exercise) type.getConstructors()[0]
                               .newInstance((Object[]) arguments);
     }
@@ -63,12 +67,16 @@ public abstract class Exercise {
 
         authJmxConnection = new AuthServiceJMXConnection();
         authServicePerformanceVariables = authJmxConnection.getAuthServicePerformanceVariables();
+        recorder = new Recorder();
     }
 
     protected void stop() {
         LOGGER.info("Stopping @ " + System.currentTimeMillis());
+        TimingStatistics timings = recorder.aggregate();
+        LOGGER.info(timings.toString());
         try {
             reset();
+            recorder = new Recorder();
             isRunning = false;
             try {
                 threadPool.shutdown();
@@ -108,6 +116,10 @@ public abstract class Exercise {
     }
 
     public void reset() {
+    }
+
+	public Recorder getRecorder() {
+	    return recorder;
     }
 
 }
