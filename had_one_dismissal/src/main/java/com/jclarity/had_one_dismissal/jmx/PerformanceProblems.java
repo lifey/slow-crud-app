@@ -72,13 +72,13 @@ public class PerformanceProblems extends JMXComponent implements PerformanceProb
     }
 
     @Override
-	public boolean isSavingLoadedData() {
-	    return savingLoadedData;
+    public boolean isSavingLoadedData() {
+        return savingLoadedData;
     }
 
     @Override
-	public void setSavingLoadedData(boolean savingLoadedData) {
-	    this.savingLoadedData = savingLoadedData;
+    public void setSavingLoadedData(boolean savingLoadedData) {
+        this.savingLoadedData = savingLoadedData;
     }
 
 }

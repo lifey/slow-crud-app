@@ -9,48 +9,48 @@ import com.gs.collections.impl.list.mutable.primitive.LongArrayList;
 
 public class Recorder {
 
-	private final List<Stopwatch> watches;
+    private final List<Stopwatch> watches;
 
-	public Recorder() {
-	    watches = Lists.newArrayList();
+    public Recorder() {
+        watches = Lists.newArrayList();
     }
 
-	public synchronized Stopwatch newWatch() {
-		Stopwatch watch = new Stopwatch();
-		watches.add(watch);
-		return watch;
-	}
+    public synchronized Stopwatch newWatch() {
+        Stopwatch watch = new Stopwatch();
+        watches.add(watch);
+        return watch;
+    }
 
-	public TimingStatistics aggregate() {
-		MutableLongList allTimings = new LongArrayList();
-		for (Stopwatch watch : watches) {
-			LongList timings = watch.getTimings();
-			allTimings.addAll(timings);
+    public TimingStatistics aggregate() {
+        MutableLongList allTimings = new LongArrayList();
+        for (Stopwatch watch : watches) {
+            LongList timings = watch.getTimings();
+            allTimings.addAll(timings);
         }
-		return calculateStats(allTimings);
-	}
-
-	private TimingStatistics calculateStats(MutableLongList timings) {
-	    timings.sortThis();
-	    
-	    return new TimingStatistics(timings.average(),
-	    							percentile(timings, 0.5),
-	    							percentile(timings, 0.9),
-	    							percentile(timings, 0.99),
-	    							timings.getLast());
+        return calculateStats(allTimings);
     }
 
-	private long percentile(LongList sortedList, double percentile) {
-		double index = percentile * (sortedList.size() - 1);
-		double round = Math.round(index);
-		if (round == index) {
-			return sortedList.get((int) index);
-		}
+    private TimingStatistics calculateStats(MutableLongList timings) {
+        timings.sortThis();
+        
+        return new TimingStatistics(timings.average(),
+                                    percentile(timings, 0.5),
+                                    percentile(timings, 0.9),
+                                    percentile(timings, 0.99),
+                                    timings.getLast());
+    }
 
-		double floor = Math.floor(index);
-		double lower = sortedList.get((int) floor);
-		double upper = sortedList.get((int) floor + 1);
-		return (long) Math.round((lower + upper) / 2);
-	}
+    private long percentile(LongList sortedList, double percentile) {
+        double index = percentile * (sortedList.size() - 1);
+        double round = Math.round(index);
+        if (round == index) {
+            return sortedList.get((int) index);
+        }
+
+        double floor = Math.floor(index);
+        double lower = sortedList.get((int) floor);
+        double upper = sortedList.get((int) floor + 1);
+        return (long) Math.round((lower + upper) / 2);
+    }
 
 }

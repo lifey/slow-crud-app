@@ -110,7 +110,7 @@ public class Search {
 
     @RequestMapping
     public String index(Model uiModel) {
-    	uiModel.addAttribute("advert", adverts.getAdvert());
+        uiModel.addAttribute("advert", adverts.getAdvert());
 
         return "search/index";
     }

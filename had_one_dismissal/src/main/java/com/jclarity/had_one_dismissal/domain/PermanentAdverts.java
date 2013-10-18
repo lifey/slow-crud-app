@@ -21,49 +21,49 @@ public class PermanentAdverts {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PermanentAdverts.class);
 
-	@Autowired private PerformanceProblems problems;
+    @Autowired private PerformanceProblems problems;
 
-	private final Random random;
+    private final Random random;
 
-	private List<String> adverts;
+    private List<String> adverts;
 
-	public PermanentAdverts() {
-	    random = new Random();
-	    adverts = Lists.newArrayList();
+    public PermanentAdverts() {
+        random = new Random();
+        adverts = Lists.newArrayList();
     }
 
-	private void loadAdverts() {
-		if (haveLoadedAdverts() && cacheEnabled())
-			return;
+    private void loadAdverts() {
+        if (haveLoadedAdverts() && cacheEnabled())
+            return;
 
-		try {
-	        File ads = getFile("adverts.csv");
-	        File buffer = getFile("buffer.csv");
-	        Files.copy(ads, buffer);
-	        adverts = Files.readLines(buffer, Charset.defaultCharset());
+        try {
+            File ads = getFile("adverts.csv");
+            File buffer = getFile("buffer.csv");
+            Files.copy(ads, buffer);
+            adverts = Files.readLines(buffer, Charset.defaultCharset());
         } catch (URISyntaxException e) {
-        	LOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         } catch (IOException e) {
-        	LOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
-	}
-
-	private File getFile(String name) throws URISyntaxException {
-	    return new File(PermanentAdverts.class.getResource(name).toURI());
     }
 
-	private boolean cacheEnabled() {
-	    return problems.isSavingLoadedData();
+    private File getFile(String name) throws URISyntaxException {
+        return new File(PermanentAdverts.class.getResource(name).toURI());
     }
 
-	private boolean haveLoadedAdverts() {
-	    return !adverts.isEmpty();
+    private boolean cacheEnabled() {
+        return problems.isSavingLoadedData();
     }
 
-	public String getAdvert() {
-		loadAdverts();
-		int index = random.nextInt(adverts.size());
-		return adverts.get(index);
-	}
+    private boolean haveLoadedAdverts() {
+        return !adverts.isEmpty();
+    }
+
+    public String getAdvert() {
+        loadAdverts();
+        int index = random.nextInt(adverts.size());
+        return adverts.get(index);
+    }
 
 }

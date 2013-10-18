@@ -24,7 +24,7 @@ public class HadOneDismissal {
     private static String LOGIN_URL       = URL + "resources/j_spring_security_check";
     private static String LOGOUT_URL      = URL + "resources/j_spring_security_logout";
     private static String POPULATE_DB     = URL + "populate/index";
-    private static String SEARCH	      = URL + "search/index";
+    private static String SEARCH          = URL + "search/index";
 
     private final BasicCookieStore cookies;
 
@@ -77,7 +77,7 @@ public class HadOneDismissal {
     }
     
     public void searchIndex() throws IOException {
-    	execute(Request.Get(SEARCH));
+        execute(Request.Get(SEARCH));
     }
 
     private void execute(Request request) throws ClientProtocolException, IOException {

@@ -33,6 +33,13 @@
     <!-- </Call> -->
     <!-- </Get> -->
 
+    <Get name="ThreadPool">
+      <Set name="minThreads" type="int">200</Set>
+      <Set name="maxThreads" type="int">200</Set>
+      <Set name="idleTimeout" type="int"><Property name="threads.timeout" default="60000"/></Set>
+      <Set name="detailedDump">false</Set>
+    </Get>
+
     <New id="ConnectorServer" class="org.eclipse.jetty.jmx.ConnectorServer">
         <Arg>
             <New class="javax.management.remote.JMXServiceURL">
@@ -47,3 +54,4 @@
     </New>
 
 </Configure>
+
