@@ -33,6 +33,13 @@
     <!-- </Call> -->
     <!-- </Get> -->
 
+	<Set name="threadPool">
+		<New class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+			<Set name="minThreads">200</Set>
+			<Set name="maxThreads">200</Set>
+		</New>
+	</Set>
+
     <New id="ConnectorServer" class="org.eclipse.jetty.jmx.ConnectorServer">
         <Arg>
             <New class="javax.management.remote.JMXServiceURL">
@@ -47,3 +54,4 @@
     </New>
 
 </Configure>
+

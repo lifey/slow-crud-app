@@ -4,9 +4,9 @@ public interface PerformanceVariablesMXBean {
 
     public static final String ADDRESS = "com.jclarity.had_one_dismissal:type=PerformanceVariables";
 
-    public int getThreadPoolSize();
+    public int getMaxThreadPoolSize();
 
-    public void setThreadPoolSize(int size);
+    public void setMaxThreadPoolSize(int size);
 
     public int getPerturbingObjectSize();
 
@@ -27,5 +27,9 @@ public interface PerformanceVariablesMXBean {
     public int getRetainedObjectPoolSize();
 
     public void setRetainedObjectPoolSize(int sizeInKb);
+
+    public void setMinThreadPoolSize(int minThreadPoolSize);
+
+    public int getMinThreadPoolSize();
 
 }

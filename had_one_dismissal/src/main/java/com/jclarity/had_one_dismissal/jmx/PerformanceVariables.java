@@ -1,5 +1,6 @@
 package com.jclarity.had_one_dismissal.jmx;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jclarity.crud_common.api.PerformanceVariablesMXBean;
@@ -7,8 +8,11 @@ import com.jclarity.crud_common.jmx.JMXComponent;
 
 @Component
 public class PerformanceVariables extends JMXComponent implements PerformanceVariablesMXBean {
+	
+	private final JettyConfigurationEditor configurationEditor;
 
-    private int threadPoolSize;
+	private int minThreadPoolSize;
+    private int maxThreadPoolSize;
 
     private int perturbingObjectSize;
     private int perturbingObjectQuantity;
@@ -16,18 +20,50 @@ public class PerformanceVariables extends JMXComponent implements PerformanceVar
     private int retainedObjectQuantity;
     private int retainedObjectPoolSize;
 
-    public PerformanceVariables() throws Exception {
+    @Autowired
+    public PerformanceVariables(JettyConfigurationEditor configurationEditor) throws Exception {
+        this.configurationEditor = configurationEditor;
+        
+        minThreadPoolSize = configurationEditor.readMinThreadPoolSize();
+        maxThreadPoolSize = configurationEditor.readMaxThreadPoolSize();
+        
+        perturbingObjectSize = 0;
+        perturbingObjectQuantity = 0;
+        retainedObjectSize = 0;
+        retainedObjectQuantity = 0;
+        retainedObjectPoolSize = 0;
+        
         register(PerformanceVariablesMXBean.ADDRESS);
     }
-
-    @Override
-    public int getThreadPoolSize() {
-        return threadPoolSize;
+    
+    // NB: jetty instance is run inside a while loop
+    // in order to allow restarting
+    private void restart() {
+    	System.exit(0);
     }
 
     @Override
-    public void setThreadPoolSize(int size) {
-        threadPoolSize = size;
+    public int getMinThreadPoolSize() {
+    	return minThreadPoolSize;
+    }
+
+    @Override
+    public void setMinThreadPoolSize(int size) {
+    	this.minThreadPoolSize = size;
+    	configurationEditor.writeMinThreadPoolSize(size);
+    	restart();
+    }
+
+    @Override
+    public int getMaxThreadPoolSize() {
+        return maxThreadPoolSize;
+    }
+
+    @Override
+    public void setMaxThreadPoolSize(int size) {
+        maxThreadPoolSize = size;
+        configurationEditor.writeMaxThreadPoolSize(size);
+        restart();
     }
 
     @Override
