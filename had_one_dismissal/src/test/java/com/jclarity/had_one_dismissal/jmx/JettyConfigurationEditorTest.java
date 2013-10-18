@@ -20,14 +20,22 @@ public class JettyConfigurationEditorTest {
 
 	@Test
 	public void writesMin() {
-		object.writeMinThreadPoolSize(5);
-		assertEquals(5, new JettyConfigurationEditor().readMinThreadPoolSize());
+		try {			
+			object.writeMinThreadPoolSize(5);
+			assertEquals(5, new JettyConfigurationEditor().readMinThreadPoolSize());
+		} finally {			
+			object.writeMinThreadPoolSize(200);
+		}
 	}
 
 	@Test
 	public void writesMax() {
-		object.writeMaxThreadPoolSize(100);
-		assertEquals(100, new JettyConfigurationEditor().readMaxThreadPoolSize());
+		try {			
+			object.writeMaxThreadPoolSize(100);
+			assertEquals(100, new JettyConfigurationEditor().readMaxThreadPoolSize());
+		} finally {			
+			object.writeMaxThreadPoolSize(200);
+		}
 	}
 
 }
