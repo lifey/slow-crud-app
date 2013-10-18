@@ -3,13 +3,10 @@ package com.jclarity.had_one_dismissal.jmx;
 import static java.lang.Integer.parseInt;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,19 +26,15 @@ public class JettyConfigurationEditor {
 	
 	private static final String maxThreads = "maxThreads";
 	private static final String minThreads = "minThreads";
-	private static final String relativeJettyXml = "../../../../jetty.xml";
+	
+	// This deliberately references src/main/resources, rather than
+	// using getResource() since that's what the maven-jetty-plugin references
+	private static final String relativeJettyXml = "src/main/resources/jetty.xml";
 	
 	private final Pattern minThreadsPattern;
 	private final Pattern maxThreadsPattern;
 	
 	public JettyConfigurationEditor() {
-		try {
-	        File file = new File(JettyConfigurationEditor.class.getResource(relativeJettyXml).toURI());
-	        System.out.println("FILE: " + file.getAbsolutePath());
-        } catch (URISyntaxException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
 		minThreadsPattern = Pattern.compile(jettySetFinder(minThreads));
 		maxThreadsPattern = Pattern.compile(jettySetFinder(maxThreads));
     }
@@ -71,8 +64,7 @@ public class JettyConfigurationEditor {
 	}
 	
 	private <T> Optional<T> withLines(Function<String, Optional<T>> handler) {
-		InputStream jettyXml = JettyConfigurationEditor.class.getResourceAsStream(relativeJettyXml);
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(jettyXml))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(relativeJettyXml))) {
 			String line;
 			while ((line=reader.readLine()) != null) {
 				Optional<T> result = handler.apply(line);
@@ -87,34 +79,28 @@ public class JettyConfigurationEditor {
 	}
 
 	private void replaceConfig(final Pattern pattern, final String replacement) {
-		try {
-			final List<String> result = Lists.newArrayList();
-	        withLines(new Function<String, Optional<Void>>() {
-	        	@Override
-	        	public Optional<Void> apply(String line) {
-	        		Matcher matcher = pattern.matcher(line);
-					if (matcher.find()) {
-						line = matcher.replaceFirst(replacement);
-					}
-					result.add(line);
-					
-					return Optional.absent();
-	        	}
-	        });
-	        
-	        File file = new File(JettyConfigurationEditor.class.getResource(relativeJettyXml).toURI());
-	        logger.info("Updating jetty file: {}", file.getAbsolutePath());
-	        try(PrintWriter writer = new PrintWriter(file)) {
-	        	for (String line : result) {
-	                writer.write(line);
-	                writer.write('\n');
-                }
-	        	writer.flush();
-	        } catch (FileNotFoundException e) {
-	        	throw new RuntimeException(e);
+		final List<String> result = Lists.newArrayList();
+        withLines(new Function<String, Optional<Void>>() {
+        	@Override
+        	public Optional<Void> apply(String line) {
+        		Matcher matcher = pattern.matcher(line);
+				if (matcher.find()) {
+					line = matcher.replaceFirst(replacement);
+				}
+				result.add(line);
+				
+				return Optional.absent();
+        	}
+        });
+        
+        try(PrintWriter writer = new PrintWriter(relativeJettyXml)) {
+        	for (String line : result) {
+                writer.write(line);
+                writer.write('\n');
             }
-        } catch (URISyntaxException e) {
-	        throw new RuntimeException(e);
+        	writer.flush();
+        } catch (FileNotFoundException e) {
+        	throw new RuntimeException(e);
         }
 	}
 
