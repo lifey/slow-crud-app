@@ -36,12 +36,6 @@ public class PerformanceVariables extends JMXComponent implements PerformanceVar
         register(PerformanceVariablesMXBean.ADDRESS);
     }
     
-    // NB: jetty instance is run inside a while loop
-    // in order to allow restarting
-    private void restart() {
-    	System.exit(0);
-    }
-
     @Override
     public int getMinThreadPoolSize() {
     	return minThreadPoolSize;
@@ -51,7 +45,6 @@ public class PerformanceVariables extends JMXComponent implements PerformanceVar
     public void setMinThreadPoolSize(int size) {
     	this.minThreadPoolSize = size;
     	configurationEditor.writeMinThreadPoolSize(size);
-    	restart();
     }
 
     @Override
@@ -63,7 +56,6 @@ public class PerformanceVariables extends JMXComponent implements PerformanceVar
     public void setMaxThreadPoolSize(int size) {
         maxThreadPoolSize = size;
         configurationEditor.writeMaxThreadPoolSize(size);
-        restart();
     }
 
     @Override
