@@ -22,6 +22,6 @@ public interface PerformanceProblemsMXBean {
 
     public boolean isSavingLoadedData();
 
-	public void setSavingLoadedData(boolean savingLoadedData);
+    public void setSavingLoadedData(boolean savingLoadedData);
 
 }

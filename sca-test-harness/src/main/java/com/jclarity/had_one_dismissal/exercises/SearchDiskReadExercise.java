@@ -13,13 +13,13 @@ import com.jclarity.had_one_dismissal.api.Job;
 public class SearchDiskReadExercise extends Exercise {
 
     class SearchIndex extends Job {
-		public SearchIndex(Exercise exercise) {
-	        super(exercise);
+        public SearchIndex(Exercise exercise) {
+            super(exercise);
         }
 
-		@Override
+        @Override
         protected void runJob() throws Exception {
-			hadOneDismissal.searchIndex();
+            hadOneDismissal.searchIndex();
         }
     }
 
@@ -29,7 +29,7 @@ public class SearchDiskReadExercise extends Exercise {
 
     @Override
     public void runExercise() {
-    	for (int i = 0; i < poolSize; i++) {
+        for (int i = 0; i < poolSize; i++) {
             threadPool.execute(new SearchIndex(this));
         }
     }

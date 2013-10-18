@@ -16,7 +16,7 @@ public class PermanentAdvertsTest {
 
     @Test
     public void loadsDataFromFiles() throws Exception {
-    	assertTrue(object.getAdvert().endsWith("would love to hire you!"));
+        assertTrue(object.getAdvert().endsWith("would love to hire you!"));
     }
 
 }

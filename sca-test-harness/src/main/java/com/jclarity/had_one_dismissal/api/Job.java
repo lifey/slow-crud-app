@@ -15,15 +15,15 @@ public abstract class Job implements Runnable {
 
     @Override
     public void run() {
-    	Stopwatch stopwatch = exercise.getRecorder().newWatch();
+        Stopwatch stopwatch = exercise.getRecorder().newWatch();
         while(exercise.isRunning()) {
-        	stopwatch.start();
+            stopwatch.start();
             try {
                 runJob();
             } catch (Exception e) {
                 // Deliberately ignored
             } finally {
-            	stopwatch.stop();
+                stopwatch.stop();
             }
         }
     }

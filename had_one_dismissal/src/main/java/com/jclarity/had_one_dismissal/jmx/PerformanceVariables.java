@@ -8,10 +8,10 @@ import com.jclarity.crud_common.jmx.JMXComponent;
 
 @Component
 public class PerformanceVariables extends JMXComponent implements PerformanceVariablesMXBean {
-	
-	private final JettyConfigurationEditor configurationEditor;
+    
+    private final JettyConfigurationEditor configurationEditor;
 
-	private int minThreadPoolSize;
+    private int minThreadPoolSize;
     private int maxThreadPoolSize;
 
     private int perturbingObjectSize;
@@ -38,13 +38,13 @@ public class PerformanceVariables extends JMXComponent implements PerformanceVar
     
     @Override
     public int getMinThreadPoolSize() {
-    	return minThreadPoolSize;
+        return minThreadPoolSize;
     }
 
     @Override
     public void setMinThreadPoolSize(int size) {
-    	this.minThreadPoolSize = size;
-    	configurationEditor.writeMinThreadPoolSize(size);
+        this.minThreadPoolSize = size;
+        configurationEditor.writeMinThreadPoolSize(size);
     }
 
     @Override

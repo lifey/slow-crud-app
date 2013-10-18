@@ -118,8 +118,8 @@ public abstract class Exercise {
     public void reset() {
     }
 
-	public Recorder getRecorder() {
-	    return recorder;
+    public Recorder getRecorder() {
+        return recorder;
     }
 
 }
