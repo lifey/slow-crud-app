@@ -35,8 +35,15 @@ public class JettyConfigurationEditor {
 	private final Pattern maxThreadsPattern;
 	
 	public JettyConfigurationEditor() {
-		 minThreadsPattern = Pattern.compile(jettySetFinder(minThreads));
-		 maxThreadsPattern = Pattern.compile(jettySetFinder(maxThreads));
+		try {
+	        File file = new File(JettyConfigurationEditor.class.getResource(relativeJettyXml).toURI());
+	        System.out.println("FILE: " + file.getAbsolutePath());
+        } catch (URISyntaxException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
+		minThreadsPattern = Pattern.compile(jettySetFinder(minThreads));
+		maxThreadsPattern = Pattern.compile(jettySetFinder(maxThreads));
     }
 	
 	private String jettySetFinder(String name) {
@@ -44,7 +51,7 @@ public class JettyConfigurationEditor {
 	}
 
 	private String jettySetPattern(String name, String body) {
-		return "<Set name=\"" + name + "\">" + body + "</Set>";
+		return "<Set name=\"" + name + "\" type=\"int\">" + body + "</Set>";
     }
 
 	public int readMinThreadPoolSize() {
@@ -96,6 +103,7 @@ public class JettyConfigurationEditor {
 	        });
 	        
 	        File file = new File(JettyConfigurationEditor.class.getResource(relativeJettyXml).toURI());
+	        logger.info("Updating jetty file: {}", file.getAbsolutePath());
 	        try(PrintWriter writer = new PrintWriter(file)) {
 	        	for (String line : result) {
 	                writer.write(line);
