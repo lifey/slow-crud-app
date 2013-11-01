@@ -1,8 +1,12 @@
 package com.jclarity.had_one_dismissal;
 
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.security.ProtectionDomain;
 
 import org.eclipse.jetty.server.Server;
@@ -13,7 +17,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Server server = new Server(8080);
-        XmlConfiguration config = new XmlConfiguration(new File("src/main/resources/jetty.xml").toURL());
+        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("WEB-INF/classes/jetty.xml");
+        File jettyFile = new File("/tmp/jetty.xml");
+        Files.copy(in, jettyFile.toPath(), REPLACE_EXISTING);
+        
+        XmlConfiguration config = new XmlConfiguration(jettyFile.toURL());
         config.configure(server);
         
         WebAppContext context = new WebAppContext();
