@@ -380,7 +380,7 @@
 							<mainClass>com.jclarity.had_one_dismissal.Main</mainClass>
 						</manifest>
 					</archive>
-					<packagingExcludes>WEB-INF/lib/jetty-*.jar,WEB-INF/lib/*EmbeddedJetty*.jar</packagingExcludes>
+					<packagingExcludes>WEB-INF/lib/jetty-*.jar,WEB-INF/lib/*embedded-jetty*.jar</packagingExcludes>
 					<overlays>
 						<overlay>
 							<groupId>com.jclarity.had_one_dismissal</groupId>

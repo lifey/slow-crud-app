@@ -30,7 +30,6 @@ public class Main {
         context.setServer(server);
         context.setExtractWAR(true);
         context.setContextPath("/");
-//        context.setInitParameter( "contextClass", "org.springframework.web.context.support.AnnotationConfigWebApplicationContext" );
 
         ProtectionDomain protectionDomain = Main.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
