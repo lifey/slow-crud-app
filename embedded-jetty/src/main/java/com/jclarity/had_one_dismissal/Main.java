@@ -16,9 +16,11 @@ import org.eclipse.jetty.xml.XmlConfiguration;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        File jettyFile = new File("/tmp/jetty.xml");
+        System.setProperty("jetty.xml", jettyFile.getAbsolutePath());
+        
         Server server = new Server(8080);
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("WEB-INF/classes/jetty.xml");
-        File jettyFile = new File("/tmp/jetty.xml");
         Files.copy(in, jettyFile.toPath(), REPLACE_EXISTING);
         
         XmlConfiguration config = new XmlConfiguration(jettyFile.toURL());
