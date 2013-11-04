@@ -106,16 +106,4 @@ privileged aspect LocationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Expected 'Location' identifier to no longer be null", obj.getId());
     }
     
-    @Test
-    public void LocationIntegrationTest.testRemove() {
-        Location obj = dod.getRandomLocation();
-        Assert.assertNotNull("Data on demand for 'Location' failed to initialize correctly", obj);
-        Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'Location' failed to provide an identifier", id);
-        obj = Location.findLocation(id);
-        obj.remove();
-        obj.flush();
-        Assert.assertNull("Failed to remove 'Location' with identifier '" + id + "'", Location.findLocation(id));
-    }
-    
 }

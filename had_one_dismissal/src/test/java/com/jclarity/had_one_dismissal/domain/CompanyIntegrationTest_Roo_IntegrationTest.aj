@@ -106,16 +106,4 @@ privileged aspect CompanyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Expected 'Company' identifier to no longer be null", obj.getId());
     }
     
-    @Test
-    public void CompanyIntegrationTest.testRemove() {
-        Company obj = dod.getRandomCompany();
-        Assert.assertNotNull("Data on demand for 'Company' failed to initialize correctly", obj);
-        Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'Company' failed to provide an identifier", id);
-        obj = Company.findCompany(id);
-        obj.remove();
-        obj.flush();
-        Assert.assertNull("Failed to remove 'Company' with identifier '" + id + "'", Company.findCompany(id));
-    }
-    
 }

@@ -29,7 +29,7 @@ public class JettyConfigurationEditor {
     
     // This deliberately references src/main/resources, rather than
     // using getResource() since that's what the maven-jetty-plugin references
-    private static final String relativeJettyXml = "src/main/resources/jetty.xml";
+    private static final String relativeJettyXml = System.getProperty("jetty.xml", "src/main/resources/jetty.xml");
     
     private final Pattern minThreadsPattern;
     private final Pattern maxThreadsPattern;

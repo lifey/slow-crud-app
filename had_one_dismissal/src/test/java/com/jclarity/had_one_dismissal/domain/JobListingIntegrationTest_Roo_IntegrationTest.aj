@@ -106,16 +106,4 @@ privileged aspect JobListingIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Expected 'JobListing' identifier to no longer be null", obj.getId());
     }
     
-    @Test
-    public void JobListingIntegrationTest.testRemove() {
-        JobListing obj = dod.getRandomJobListing();
-        Assert.assertNotNull("Data on demand for 'JobListing' failed to initialize correctly", obj);
-        Long id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'JobListing' failed to provide an identifier", id);
-        obj = JobListing.findJobListing(id);
-        obj.remove();
-        obj.flush();
-        Assert.assertNull("Failed to remove 'JobListing' with identifier '" + id + "'", JobListing.findJobListing(id));
-    }
-    
 }

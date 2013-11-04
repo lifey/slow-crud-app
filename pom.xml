@@ -11,10 +11,15 @@
 
     <modules>
         <module>crud-common</module>
+        <module>embedded-jetty</module>
         <module>auth-service</module>
         <module>had_one_dismissal</module>
         <module>sca-test-harness</module>
     </modules>
+    
+    <properties>
+    	<jetty.version>9.0.6.v20130930</jetty.version>
+    </properties>
 
     <scm>
         <developerConnection>scm:git:git@github.com:jClarity/slow-crud-app.git</developerConnection>
