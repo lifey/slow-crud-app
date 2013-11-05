@@ -41,7 +41,9 @@ Building slow-crud-app
 
 slow-crud-app is a Maven 3 project
 
-```mvn clean install```
+```
+mvn clean install
+```
 
 Running slow-crud-app
 =====================
@@ -58,6 +60,7 @@ Also, you'll want to bring up the 3rd party service
 ```
 cd auth-service
 mvn jetty:run
+```
 
 Running Performance Tests
 =========================
