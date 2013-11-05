@@ -1,7 +1,13 @@
 package com.jclarity.had_one_dismissal;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,32 +21,39 @@ import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-public class Main {
-    private static Logger LOGGER = LoggerFactory.getLogger(Main.class);
+public class TestHarnessMain {
+    private static Logger LOGGER = LoggerFactory.getLogger(TestHarnessMain.class);
 
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args) throws ParseException, IOException, URISyntaxException {
         Options options = new Options();
-        options.addOption("f", true, "csv file to use for exercises");
+        options.addOption("f", true, "csv file to use for exercises, default is 'exercises.csv'");
         options.addOption("c", true, "single class to run");
         options.addOption("t", true, "time limit to run for");
+        options.addOption("h", false, "display this help message");
 
         CommandLine cmd = new GnuParser().parse(options, args);
 
+        if (cmd.hasOption("h")) {
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("Main", options);
+            return;
+        }
+        
         if (cmd.hasOption("f")) {
-            runFromCsv(cmd.getOptionValue("f"));
+            runFromCsv(new FileInputStream(cmd.getOptionValue("f")));
         } else if (cmd.hasOption("c")) {
             String exercise = cmd.getOptionValue("c");
             long timeLimit = Long.parseLong(cmd.getOptionValue("t"));
             Exercise.runExercise(exercise, timeLimit, new String[0]);
         } else {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("Main", options);
+            InputStream exercises = TestHarnessMain.class.getResourceAsStream("exercises.csv");
+            runFromCsv(exercises);
         }
     }
 
-    public static void runFromCsv(String csvFile) throws IOException {
+    public static void runFromCsv(InputStream csvStream) throws IOException {
         List<String[]> exercises;
-        try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(csvStream))) {
             exercises = reader.readAll();
         }
 

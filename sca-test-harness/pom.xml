@@ -20,6 +20,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <toolsjar>${java.home}/../lib/tools.jar</toolsjar>
         <gs.collections.version>4.1.0</gs.collections.version>
+        <mainClass>com.jclarity.had_one_dismissal.TestHarnessMain</mainClass>
     </properties>
 
     <build>
@@ -30,6 +31,11 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <archive>
+                         <manifest>
+                            <mainClass>${mainClass}</mainClass>
+                         </manifest>
+                    </archive>
                 </configuration>
                 <executions>
                     <execution>
@@ -52,7 +58,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.jclarity.had_one_dismissal.Main</mainClass>
+                    <mainClass>${mainClass}</mainClass>
                     <arguments>-f src/main/resources/exercises.csv</arguments>
                 </configuration>
             </plugin>
