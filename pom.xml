@@ -34,6 +34,7 @@
                                 <mainClass>com.jclarity.had_one_dismissal.Main</mainClass>
                             </manifest>
                         </archive>
+                        <warName>${project.name}</warName>
                         <packagingExcludes>WEB-INF/lib/jetty-*.jar,WEB-INF/lib/*embedded-jetty*.jar</packagingExcludes>
                         <overlays>
                             <overlay>
