@@ -41,9 +41,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.jclarity.had_one_dismissal.Main</mainClass>
+                    <arguments>-f src/main/resources/exercises.csv</arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -84,14 +99,14 @@
             <version>12.0.1</version>
         </dependency>
         <dependency>
-		    <groupId>com.goldmansachs</groupId>
-		    <artifactId>gs-collections</artifactId>
-		    <version>${gs.collections.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.goldmansachs</groupId>
-		    <artifactId>gs-collections-api</artifactId>
-		    <version>${gs.collections.version}</version>
-		</dependency>
+            <groupId>com.goldmansachs</groupId>
+            <artifactId>gs-collections</artifactId>
+            <version>${gs.collections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.goldmansachs</groupId>
+            <artifactId>gs-collections-api</artifactId>
+            <version>${gs.collections.version}</version>
+        </dependency>
     </dependencies>
 </project>
