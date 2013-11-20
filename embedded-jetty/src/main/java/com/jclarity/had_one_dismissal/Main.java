@@ -1,6 +1,7 @@
 package com.jclarity.had_one_dismissal;
 
 
+import static java.lang.Integer.parseInt;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import org.xml.sax.SAXException;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(8080);
+        Server server = new Server(parseInt(args[0]));
         configureJettyXml(server);
 
         WebAppContext context = new WebAppContext();
@@ -34,8 +35,6 @@ public class Main {
         server.setHandler(context);
         try {
             server.start();
-            System.in.read();
-            server.stop();
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
