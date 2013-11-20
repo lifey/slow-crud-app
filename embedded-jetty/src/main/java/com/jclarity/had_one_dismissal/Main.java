@@ -35,8 +35,6 @@ public class Main {
         server.setHandler(context);
         try {
             server.start();
-            System.in.read();
-            server.stop();
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
